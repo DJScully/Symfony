@@ -28,7 +28,7 @@ class EjemploController extends AbstractController
     }
 
     /**
-     * @Route("/home", name="home")
+     * @Route("/", name="home")
      */
     public function home(){
         $name = 'Jordan';
