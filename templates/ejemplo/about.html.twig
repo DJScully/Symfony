@@ -1,9 +1,8 @@
-<html>
-    <head>
-    </head>
-    <body>
+{% extends 'base.html.twig' %}
+{% block title %} <title>About Us</title>  {% endblock %}
+   {% block body %}
         <h1>{{nombre}}</h1>
+         {% include("menu.html.twig") %}
         <h3>Es un framework diseñado para desarrollar aplicaciones web basado en el patrón Modelo Vista Controlador.
             Para empezar, separa la lógica de negocio, la lógica de servidor y la presentación de la aplicación web.</h3>
-    </body>
-<html>
+  {% endblock %}

@@ -1,8 +1,9 @@
-<html>
-    <head>
-    </head>
+ {% extends 'base.html.twig' %} 
+ {% block title %} <title>Home</title>  {% endblock %}
+  {% block body %}
     <body>
-       <h1>Bienvenido  {{ nombre }} </h1>, <h2>gracias por usar nuestro framework para el desarrollo de sus
+    {% include("menu.html.twig") %}
+       <h1>Bienvenido  {{ nombre }} </h1><h2>Gracias por usar nuestro framework para el desarrollo de sus
         futuros proyectos</h2>
     </body>
-<html>
+  {% endblock %}
