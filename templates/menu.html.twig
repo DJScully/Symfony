@@ -1,8 +1,44 @@
-<ul>
-            <a class="nav-link" href="{{ path('home') }}"><li>Home</li></a>
-            <a class="nav-link" href="{{ path('login') }}"><li>Login</li></a>
-            <a class="nav-link" href="{{ path('about_us') }}"><li>About Us</li></a>
-            <a class="nav-link" href="{{ path('catalogo') }}"><li>Catalogo</li></a>
+<ul class="list-group list-group-horizontal">
+            <a class="nav-link" href="{{ path('home') }}"><li class="list-group-item">Home</li></a>
+            <a class="nav-link" href="{{ path('login') }}"><li class="list-group-item">Login</li></a>
+            <a class="nav-link" href="{{ path('about_us') }}"><li class="list-group-item">About Us</li></a>
+            <a class="nav-link" href="{{ path('catalogo') }}"><li class="list-group-item">Catalogo</li></a>
        </ul>
 
        <img src="{{ asset('images/Nako.gif') }}">
+
+       <style>
+          .list-group-item {
+               color: grey;
+               list-style: none;
+               border: 1px solid black;
+               display: flex;
+               align-items: center;
+               justify-content: space-around;
+          }
+
+          .list-group{
+               background-color: lightgrey;
+               max-width: 100%;
+               margin-bottom: 20px;
+               padding: 10px;
+               display: flex;
+               align-items: center;
+               justify-content: space-around;
+          }
+
+          img {
+                padding-bottom: 20px;
+          }
+
+          .container{
+               max-width: 100%;
+              
+             
+               padding:0;
+          }
+
+          body{
+               
+          }
+       </style>
