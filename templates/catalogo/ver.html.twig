@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} <title>Vista</title>  {% endblock %}
+{% block body %}  
+{% if fondo %}
+
+{% endif %}
+    <h1>Ficha del libro </h1>
+
+  <p>Título: {{ fondo.titulo }}</p>
+  <p>ISBN: {{ fondo.isbn }}</p>
+  
+
+  <p>Autores: 
+  {% for autor in fondo.autor %} 
+  
+      <div>Nombre: {{ autor.nombre }} </div>
+      <div>Tipo: {{ autor.tipo }} </div>
+      <a class ="nav-link" href="/catalogo/libros"><button>Volver al Listado</button></a>
+    
+  {% else %} 
+    <div>Anónimo / Desconocido</div>
+  {% endfor %}
+  </p>
+
+  
+
+
+
+{% endblock %}

@@ -25,13 +25,18 @@ class Autor
     private $Nombre;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Libro::class, inversedBy="Autores")
+     * @ORM\Column(type="string", length=20)
      */
     private $Tipo;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Fondo::class, mappedBy="Autor")
+     */
+    private $Autores;
+
     public function __construct()
     {
-        $this->Tipo = new ArrayCollection();
+        $this->Autores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,26 +56,41 @@ class Autor
         return $this;
     }
 
-    /**
-     * @return Collection|Libro[]
-     */
-    public function getTipo(): Collection
+    public function getTipo(): ?string
     {
         return $this->Tipo;
     }
 
-    public function addTipo(Libro $tipo): self
+    public function setTipo(string $Tipo): self
     {
-        if (!$this->Tipo->contains($tipo)) {
-            $this->Tipo[] = $tipo;
+        $this->Tipo = $Tipo;
+
+        return $this;
+    }
+ 
+    /**
+     * @return Collection|Fondo[]
+     */
+    public function getAutores(): Collection
+    {
+        return $this->Autores;
+    }
+
+    public function addAutore(Fondo $autore): self
+    {
+        if (!$this->Autores->contains($autore)) {
+            $this->Autores[] = $autore;
+            $autore->addAutor($this);
         }
 
         return $this;
     }
 
-    public function removeTipo(Libro $tipo): self
+    public function removeAutore(Fondo $autore): self
     {
-        $this->Tipo->removeElement($tipo);
+        if ($this->Autores->removeElement($autore)) {
+            $autore->removeAutor($this);
+        }
 
         return $this;
     }

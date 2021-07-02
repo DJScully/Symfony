@@ -25,11 +25,6 @@ class Fondo
     private $Titulo;
 
     /**
-     * @ORM\Column(type="array")
-     */
-    private $Autores = [];
-
-    /**
      * @ORM\Column(type="string", length=20)
      */
     private $ISBN;
@@ -37,21 +32,32 @@ class Fondo
     /**
      * @ORM\Column(type="string", length=4)
      */
-    private $Edicion;
+    private $edicion;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Catalogo::class)
+     * @ORM\Column(type="string", length=4)
      */
-    private $Publicacion;
+    private $publicacion;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
-    private $Categoría;
+    private $categoria;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Editorial::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Editorial;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Autor::class, inversedBy="Autores")
+     */
+    private $Autor;
 
     public function __construct()
     {
-        $this->Publicacion = new ArrayCollection();
+        $this->Autor = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,18 +77,6 @@ class Fondo
         return $this;
     }
 
-    public function getAutores(): ?array
-    {
-        return $this->Autores;
-    }
-
-    public function setAutores(array $Autores): self
-    {
-        $this->Autores = $Autores;
-
-        return $this;
-    }
-
     public function getISBN(): ?string
     {
         return $this->ISBN;
@@ -97,48 +91,72 @@ class Fondo
 
     public function getEdicion(): ?string
     {
-        return $this->Edicion;
+        return $this->edicion;
     }
 
-    public function setEdicion(string $Edicion): self
+    public function setEdicion(string $edicion): self
     {
-        $this->Edicion = $Edicion;
+        $this->edicion = $edicion;
+
+        return $this;
+    }
+
+    public function getPublicacion(): ?string
+    {
+        return $this->publicacion;
+    }
+
+    public function setPublicacion(string $publicacion): self
+    {
+        $this->publicacion = $publicacion;
+
+        return $this;
+    }
+
+    public function getCategoria(): ?string
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(string $categoria): self
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getEditorial(): ?editorial
+    {
+        return $this->Editorial;
+    }
+
+    public function setEditorial(?editorial $Editorial): self
+    {
+        $this->Editorial = $Editorial;
 
         return $this;
     }
 
     /**
-     * @return Collection|Catalogo[]
+     * @return Collection|Autor[]
      */
-    public function getPublicacion(): Collection
+    public function getAutor(): Collection
     {
-        return $this->Publicacion;
+        return $this->Autor;
     }
 
-    public function addPublicacion(Catalogo $publicacion): self
+    public function addAutor(Autor $autor): self
     {
-        if (!$this->Publicacion->contains($publicacion)) {
-            $this->Publicacion[] = $publicacion;
+        if (!$this->Autor->contains($autor)) {
+            $this->Autor[] = $autor;
         }
 
         return $this;
     }
 
-    public function removePublicacion(Catalogo $publicacion): self
+    public function removeAutor(Autor $autor): self
     {
-        $this->Publicacion->removeElement($publicacion);
-
-        return $this;
-    }
-
-    public function getCategoría(): ?string
-    {
-        return $this->Categoría;
-    }
-
-    public function setCategoría(?string $Categoría): self
-    {
-        $this->Categoría = $Categoría;
+        $this->Autor->removeElement($autor);
 
         return $this;
     }

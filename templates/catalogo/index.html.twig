@@ -19,17 +19,19 @@
                 <th>Edicion</th>
                 <th>Publicacion</th>
                 <th>Categoria</th>
+                <th>Botón</th>
             <thead>
             <tbody>
                 
                     {% for fondo in fondos %}
                         <tr>
                             <td> {{fondo.titulo}} </td>
-                            <td> {{fondo.autores[0].nombre }} </td>
+                            <td> {{fondo.autor[0].nombre }} </td>
                             <td> {{fondo.editorial.nombre}} </td>
                             <td> {{fondo.edicion}} </td>
                             <td> {{fondo.publicacion}} </td>
                             <td> {{fondo.categoria}} </td>
+                            <td> <a  class="btn btn-primary" href="{{ path('catalogo-ver', {id: fondo.id}) }}">Ampliar información</a> </td>
                         </tr> 
                     {% endfor %}
                   

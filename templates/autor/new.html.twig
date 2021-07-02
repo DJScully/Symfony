@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Formulario de alta de autores </h1>
+
+   <div class="container">
+			<div class="row">
+				<div class="d-flex justify-content-center mt-2">
+					<div class="formulario">
+						<form method="POST" action="{{ path('autor-create') }}">
+							<div class="mb-3">
+								<label for="exampleInputEmail1" class="form-label">
+									Name
+								</label>
+								<input type="text" name="nombre" class="form-control" id="exampleInputName" aria-describedby="emailHelp">
+							</div>
+							<div class="mb-3">
+								<label for="exampleInputPassword1" class="form-label">
+									Type
+								</label>
+								<input type="text" name="tipo" class="form-control" id="exampleInputType"></div>
+							<button type="submit" class="btn btn-primary">
+								Enviar
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+{% endblock %}
