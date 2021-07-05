@@ -45,7 +45,12 @@ class CatalogoController extends AbstractController
             'fondos' => $fondos]);
     }
 
-    #[Route('/ver/{id}', name: 'catalogo-ver')]
+    #[Route('/catalogo/new', name: 'catalogo-new')]
+    public function new(): Response{
+        return $this->render('catalogo/new.html.twig');
+    }
+
+    #[Route('/catalogo/ver/{id}', name: 'catalogo-ver')]
     public function ver($id,FondoRepository $fondoRepository){
        
        
@@ -57,26 +62,32 @@ class CatalogoController extends AbstractController
         ]);
     }
 
-    #[Route('/crear-con-editorial', name: 'catalogo_crear-con-editorial')]
-    public function cce(
-        FondoRepository $fondoRepository,
+    #[Route('/catalogo/crear-con-editorial', name: 'catalogo_crear')]
+    public function crear(
+        Request $request,
         EntityManagerInterface $em
         ): Response
     {
+
+        $titulo= $request->request->get('titulo');
+        $isbn= $request->request->get('isbn');
+        $edicion= $request->request->get('edicion');
+        $publicacion= $request->request->get('publicacion');
+        $categoria= $request->request->get('categoria');
+
+        $autor= $request->request->get('autor');
+        $tipo= $request->request->get('tipo');
+        $editorial= $request->request->get('edit');
+
+
+
         $autorId = new Autor();
-        $autorId->setTipo('Persona');
-        $autorId->setNombre('Edgar Allan Poe');
+        $autorId->setTipo($autor);
+        $autorId->setNombre($tipo);
 
         $editorialId = new Editorial();
-        $editorialId->setNombre('The Saturday Evening Post');
+        $editorialId->setNombre( $editorial);
 
-
-        $titulo = 'El Gato Negro';
-        $isbn = '84-666-6583-5';
-        $edicion = 2010;
-        $publicacion = 2010;
-        $categoria = 'Ficción';
-       
         $em->persist(($editorialId));
         $em->persist($autorId);
 
@@ -94,47 +105,67 @@ class CatalogoController extends AbstractController
         $em->persist($fondo);
         $em->flush();
 
-        $fondos = $fondoRepository->findAll();
-
-       
-        return $this->render('catalogo/index.html.twig', [
-            'fondos' => $fondos
-        ]);
+        return $this->redirectToRoute('catalogo');
     }
 
-    #[Route('catalogo/modificar', name: 'catalogo_modificar')]
-    public function modificar(
+    #[Route('/catalogo/actualizar/{id}', name: 'catalogo-act')]
+    public function actualizar($id,  FondoRepository $fondoRepository,): Response{
+        $editorial = $fondoRepository->find($id);
+        return $this->render('catalogo/actualizar.html.twig',[
+            'fondo' => $editorial]);
+   }
+
+    #[Route('catalogo/modificar/{id}', name: 'catalogo_modificar')]
+    public function modificar($id,Request $request,
         FondoRepository $fondoRepository,
         EntityManagerInterface $em
         ): Response
     {
-        $id = 4;
-        $publicacion = 2006;
-        $aut = new Autor();
+        $titulo= $request->request->get('titulo');
+        $isbn= $request->request->get('isbn');
+        $edicion= $request->request->get('edicion');
+        $publicacion= $request->request->get('publicacion');
+        $categoria= $request->request->get('categoria');
 
-        $aut->setNombre('Dmitri Glujovski');
-        $aut->setTipo('Persona');
+        $autor= $request->request->get('autor');
+        $tipo= $request->request->get('tipo');
+        $editorial= $request->request->get('edit');
 
-        $edit = new Editorial();
 
-        $edit->setNombre('Timunmas');
+
+        $autorId = new Autor();
+        $autorId->setTipo($autor);
+        $autorId->setNombre($tipo);
+
+        $editorialId = new Editorial();
+        $editorialId->setNombre( $editorial);
+
+        $em->persist(($editorialId));
+        $em->persist($autorId);
         
         
         $fondo = $fondoRepository->find($id);
+        $fondo->setIsbn($isbn);
+        $fondo->setEdicion($edicion);
         $fondo->setPublicacion($publicacion);
-        $fondo->setTitulo("Metro 2033");
-        $fondo->addAutor($aut);
-        $fondo->setEditorial($edit);
-        $em->persist($edit);
-        $em->persist($aut);
+        $fondo->setCategoria($categoria);
+        $fondo->setTitulo($titulo);
+        $fondo->addAutor($autorId);
+        $fondo->setEditorial($editorialId);
+        $em->persist($editorialId);
+        $em->persist($autorId);
         $em->persist($fondo);
         $em->flush();
 
-        $fondos = $fondoRepository->findAll();
+        return $this->redirectToRoute('catalogo');
+    }
 
-        return $this->render('catalogo/index.html.twig', [
-            'fondos' => $fondos
-        ]);
+    #[Route('catalogo/delete/{id}', name: 'catalogo-delete')]
+    public function delete($id, FondoRepository $fondoRepository, EntityManagerInterface $em){
+        $catalogo = $fondoRepository->find($id);
+        $em->remove($catalogo);
+        $em->flush();
+        return $this->redirectToRoute('catalogo');
     }
 
 }

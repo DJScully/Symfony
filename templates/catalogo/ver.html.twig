@@ -2,29 +2,40 @@
 
 {% block title %} <title>Vista</title>  {% endblock %}
 {% block body %}  
-{% if fondo %}
+{{ include('menu.html.twig', { selectedMenu: 'home'}) }}
+<br>
+<br><br>
+ <table class="table table-dark table-bordered table-striped">
 
-{% endif %}
-    <h1>Ficha del libro </h1>
+      
+            <thead>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Editorial</th>
+                <th>Edicion</th>
+                <th>Publicacion</th>
+                <th>Categoria</th>
+               
+            <thead>
+            <tbody>
+                
+                   
+                        <tr>
+                            <td> {{fondo.titulo}} </td>
+                            <td> {{fondo.autor[0].nombre }} </td>
+                            <td> {{fondo.editorial.nombre}} </td>
+                            <td> {{fondo.edicion}} </td>
+                            <td> {{fondo.publicacion}} </td>
+                            <td> {{fondo.categoria}} </td>
+                        </tr> 
+                   
+                  
+            </tbody>
+        </table>
 
-  <p>Título: {{ fondo.titulo }}</p>
-  <p>ISBN: {{ fondo.isbn }}</p>
-  
-
-  <p>Autores: 
-  {% for autor in fondo.autor %} 
-  
-      <div>Nombre: {{ autor.nombre }} </div>
-      <div>Tipo: {{ autor.tipo }} </div>
-      <a class ="nav-link" href="/catalogo/libros"><button>Volver al Listado</button></a>
-    
-  {% else %} 
-    <div>Anónimo / Desconocido</div>
-  {% endfor %}
-  </p>
-
-  
+    <a  class="btn btn-primary" href="{{ path('catalogo') }}"  >Volver al listado</a>
+    <a  class="btn btn-primary" href="{{ path('catalogo-act', {id: fondo.id}) }}">Actualizar</a>
+    <a  class="btn btn-primary" href="{{ path('catalogo-delete', {id: fondo.id}) }}">Eliminar</a>
 
 
-
 {% endblock %}
