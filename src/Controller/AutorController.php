@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Autor;
 use App\Repository\AutorRepository;
+use App\Services\AutorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,26 +31,23 @@ class AutorController extends AbstractController{
     }
 
     #[Route('/autor/create', name: 'autor-create')]
-    public function create( Request $request, EntityManagerInterface $em): Response {
+    public function create( Request $request, AutorManager $manager): Response {
 
         $nombre= $request->request->get('nombre');
         $tipo= $request->request->get('tipo');
 
-        $autor = new Autor();
-        $autor->setNombre($nombre);
-        $autor->setTipo($tipo);
+     
 
         try{
-            $autor->getId();
-            $em->flush();
+           $autor = $manager->crearAutor($nombre,$tipo);
+           $autor->getId();
         } catch(\Exception $ex){
             $ex->getMessage();
             $ex->getCode();
             $ex->getTraceAsString();
         }
 
-        $em->persist($autor);
-        $em->flush();
+       
 
         return $this->redirectToRoute('autor');
     }

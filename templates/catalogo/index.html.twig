@@ -8,12 +8,14 @@
 
        {{ include('menu.html.twig', { selectedMenu: 'home'}) }}
 
-<a class="btn btn-primary" href="{{ path('catalogo-new') }}">Crear Nueva Editorial</a>
+<a class="btn btn-primary" href="{{ path('catalogo-new') }}">Crear Nuevo Libro</a><br><br>
         <table class="table table-dark table-bordered table-striped">
 
       
             <thead>
+                <th>ID</th>
                 <th>Titulo</th>
+                <th>ISBN</th>
                 <th>Autor</th>
                 <th>Editorial</th>
                 <th>Edicion</th>
@@ -27,15 +29,17 @@
                 
                     {% for fondo in fondos %}
                         <tr>
+                            <td> {{fondo.id}} </td>
                             <td> {{fondo.titulo}} </td>
+                            <td> {{fondo.isbn}} </td>
                             <td> {{fondo.autor[0].nombre }} </td>
                             <td> {{fondo.editorial.nombre}} </td>
                             <td> {{fondo.edicion}} </td>
                             <td> {{fondo.publicacion}} </td>
                             <td> {{fondo.categoria}} </td>
-                            <td> <a  class="btn btn-primary" href="{{ path('catalogo-ver', {id: fondo.id}) }}">Ver</a> </td>
-                            <td> <a  class="btn btn-primary" href="{{ path('catalogo-act', {id: fondo.id}) }}">Actualizar</a> </td>
-                            <td> <a  class="btn btn-primary" href="{{ path('catalogo-delete', {id: fondo.id}) }}">Eliminar</a> </td>
+                            <td> <a  class="btn btn-info" href="{{ path('catalogo-ver', {id: fondo.id}) }}">Ver</a> </td>
+                            <td> <a  class="btn btn-secondary" href="{{ path('catalogo-act', {id: fondo.id}) }}">Actualizar</a> </td>
+                            <td> <a  class="btn btn-outline-danger" href="{{ path('catalogo-delete', {id: fondo.id}) }}">Eliminar</a> </td>
                         </tr> 
                     {% endfor %}
                   

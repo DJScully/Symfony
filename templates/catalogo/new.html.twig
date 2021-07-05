@@ -8,7 +8,7 @@
 			<div class="row">
 				<div class="d-flex justify-content-center mt-2">
 					<div class="formulario">
-						<form method="POST" action="{{ path('autor-update') }}">
+						<form method="POST" action="{{ path('catalogo_crear') }}">
                         <h3>Libro</h3>
 							<div class="mb-3">
 								<label for="exampleInputEmail1" class="form-label">
@@ -45,19 +45,15 @@
 								<input type="text" name="categoria" class="form-control" id="exampleInputName" aria-describedby="emailHelp">
 							</div>
                             <h3>Autor</h3>
-                            <div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">
-									Autor
-								</label>
-								<input type="text" name="autor" class="form-control" id="exampleInputName" aria-describedby="emailHelp">
-							</div>
-
-                            <div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">
-									Tipo
-								</label>
-								<input type="text" name="tipo" class="form-control" id="exampleInputName" aria-describedby="emailHelp">
-							</div>
+								<div class="autor">
+									<select name="cars" id="cars">
+										<option value="n1">1</option> 
+										<option value="n2">2</option>      
+										<option value="n3">3</option>       
+										<option value="n4">4</option>
+										<option value="n5">5</option>
+									</select>
+								</div>
                             <h3>Editorial</h3>
 
                             <div class="mb-3">

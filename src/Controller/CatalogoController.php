@@ -5,9 +5,6 @@ namespace App\Controller;
 use App\Entity\Autor;
 use App\Entity\Editorial;
 use App\Entity\Fondo;
-use App\FakeData\Catalogo;
-use App\Repository\AutorRepository;
-use App\Repository\EditorialRepository;
 use App\Repository\FondoRepository;
 
 
@@ -82,8 +79,8 @@ class CatalogoController extends AbstractController
 
 
         $autorId = new Autor();
-        $autorId->setTipo($autor);
-        $autorId->setNombre($tipo);
+        $autorId->setTipo($tipo);
+        $autorId->setNombre($autor);
 
         $editorialId = new Editorial();
         $editorialId->setNombre( $editorial);
