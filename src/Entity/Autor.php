@@ -94,4 +94,9 @@ class Autor
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->Nombre ."(". $this->Tipo .")";
+    }
 }

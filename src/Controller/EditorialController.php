@@ -79,5 +79,10 @@ class EditorialController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('editorial');
     }
+
+    public function __toString()
+    {
+        return "Hola";
+    }
 }
 

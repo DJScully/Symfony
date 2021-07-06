@@ -90,4 +90,9 @@ class AutorController extends AbstractController{
         $em->flush();
         return $this->redirectToRoute('autor');
     }
+
+    public function __toString()
+    {
+        return "Hola";
+    }
 }
