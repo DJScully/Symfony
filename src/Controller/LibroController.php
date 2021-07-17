@@ -9,7 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/crud-libro')]
 class LibroController extends AbstractController
 {
@@ -27,11 +28,14 @@ class LibroController extends AbstractController
         $fondo = new Fondo();
         $form = $this->createForm(FondoType::class, $fondo);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($fondo);
             $entityManager->flush();
+
+            $this->addFlash("Info", "Nuevo libro añadido: " . $fondo->getTitulo());
 
             return $this->redirectToRoute('libro_index');
         }
@@ -58,6 +62,8 @@ class LibroController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            
+            $this->addFlash("Info", "Nuevo libro actualizado: " . $fondo->getTitulo());
 
             return $this->redirectToRoute('libro_index');
         } 
@@ -78,5 +84,36 @@ class LibroController extends AbstractController
         }
 
         return $this->redirectToRoute('libro_index');
+    }
+
+   
+    #[Route('/response/', name: 'response')]
+     
+    public function getJson(FondoRepository $fondoRepository)
+    {
+        $fondos = $fondoRepository->findAll();
+
+        $fondosArray = [];
+
+        foreach ( $fondos as $fondo ) {
+            $fondoArray = [
+                 $fondo->getTitulo(),
+                 $fondo->getISBN(),
+                 $fondo->getEdicion(),
+                 $fondo->getPublicacion(),
+                 $fondo->getAutor()
+            ];
+            $fondosArray[] = $fondoArray;
+        }
+        $nana = $fondosArray;
+        
+       
+      
+
+        
+
+      
+    
+      return $nana;
     }
 }
