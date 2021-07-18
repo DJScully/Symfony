@@ -36,17 +36,7 @@ class EjemploController extends AbstractController
         futuros proyectos</h2></body><html>');
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
-
-    public function login(){
-        
-        return new Response('<html><body><form><label for="id_us">Usuario</label><input type="text" id="id_us"><br><br>
-        <label for="id_pass">Contraseña</label><input type="text" id="id_pass">
-        </form></body><html>');
-    }
-
+ 
      /**
      * @Route("/about_us", name="about_us")
      */
