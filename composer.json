@@ -27,7 +27,7 @@
         "symfony/intl": "5.3.*",
         "symfony/mailer": "5.3.*",
         "symfony/mime": "5.3.*",
-        "symfony/monolog-bundle": "^3.1",
+        "symfony/monolog-bundle": "^3.7",
         "symfony/notifier": "5.3.*",
         "symfony/process": "5.3.*",
         "symfony/property-access": "5.3.*",
@@ -48,6 +48,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.9",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "^5.3",
         "symfony/css-selector": "^5.3",

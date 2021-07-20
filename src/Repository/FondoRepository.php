@@ -47,4 +47,19 @@ class FondoRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllWithAutoresAndEditoriales(): array
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT f
+        FROM App\Entity\Fondo f
+        WHERE f.publicacion > 2005
+        ORDER BY f.id ASC'
+    );
+
+    // returns an array of Product objects
+    return $query->getResult();
+}
 }

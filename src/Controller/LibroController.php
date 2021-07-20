@@ -8,17 +8,22 @@ use App\Repository\FondoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/crud-libro')]
 class LibroController extends AbstractController
 {
     #[Route('/', name: 'libro_index', methods: ['GET'])]
-    public function index(FondoRepository $fondoRepository): Response
+    public function index(SessionInterface $session, FondoRepository $fondoRepository): Response
     {
+        $session->set('filters', ['title'=> 'Venecia', 'autor'=>'Reverte']);
+        $filters = $session->get('filters');
+        print_r($filters) ;
         return $this->render('libro/index.html.twig', [
-            'fondos' => $fondoRepository->findAll(),
+            'fondos' => $fondoRepository->findAllWithAutoresAndEditoriales(),
         ]);
     }
 
@@ -47,8 +52,14 @@ class LibroController extends AbstractController
     }
 
     #[Route('/{id}', name: 'libro_show', methods: ['GET'])]
-    public function show(Fondo $fondo): Response
+    public function show(FondoRepository $fondoRepository,$id): Response
     {
+
+        $fondo = $fondoRepository->find($id);
+        if(!$fondo){
+            throw $this->createNotFoundException('Este libro no existe');
+            throw new NotFoundHttpException('Este libro no existe');
+        }
         return $this->render('libro/show.html.twig', [
             'fondo' => $fondo,
         ]);
